@@ -5,6 +5,7 @@
 WIN_USER=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
 LOGFILE="${1:-/mnt/c/Users/$WIN_USER/AppData/Local/Warframe/EE.log}"
 
+
 if [ ! -f "$LOGFILE" ]; then
   echo "Log file not found at $LOGFILE"
   echo "Usage: $0 [path_to_logfile]"

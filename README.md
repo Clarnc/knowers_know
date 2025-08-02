@@ -1,6 +1,8 @@
-<<<<<<< HEAD
+
 # Gascade_secrets
 =======
+=======
+
 # Gascade Monitor Scripts
 
 This repository contains scripts to monitor Warframe's log file and send Windows notifications when certain conditions change.
@@ -30,4 +32,4 @@ This repository contains scripts to monitor Warframe's log file and send Windows
 4. **Run the script**
    ```bash
    ./start.sh
->>>>>>> 14aaaf2 (first commit)
+
