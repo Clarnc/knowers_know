@@ -8,8 +8,7 @@ while true; do
   if [[ "$output" != "$prev_output" ]]; then
     prev_output="$output"
     win_icon_path=$(wslpath -w "$PWD/$ICON_PATH")
-    powershell.exe -Command "Import-Module BurntToast; New-BurntToastNotification -Text \"gascade\", \"$output\" -AppLogo \"$win_icon_path\""
-  fi
+    powershell.exe -Command "Import-Module BurntToast; New-BurntToastNotification -Text \"gascade\", \"$out>  fi
 
-  sleep 1
+  sleep 2
 done
