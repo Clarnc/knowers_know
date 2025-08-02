@@ -21,6 +21,7 @@
 3. **Clone this repository**
    ```bash
    git clone https://github.com/Clarnc/Gascade_secrets
+   cd Gascade_secrets/
    chmod +x gascade_secrets.sh start.sh
    ```
 4. **Run the script**
