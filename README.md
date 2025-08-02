@@ -1,11 +1,5 @@
 
 # Gascade_secrets
-=======
-=======
-
-# Gascade Monitor Scripts
-
-This repository contains scripts to monitor Warframe's log file and send Windows notifications when certain conditions change.
 
 ## Requirements
 
