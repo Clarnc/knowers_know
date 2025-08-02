@@ -1,1 +1,33 @@
+<<<<<<< HEAD
 # Gascade_secrets
+=======
+# Gascade Monitor Scripts
+
+This repository contains scripts to monitor Warframe's log file and send Windows notifications when certain conditions change.
+
+## Requirements
+
+- **WSL2** (Windows Subsystem for Linux)
+- **BurntToast PowerShell module** for notifications
+
+## Installation
+
+1. **Enable WSL2**  
+   If not already done, install WSL2 on your Windows machine.  
+   See: https://apps.microsoft.com/detail/9PDXGNCFSCZV?hl=en-us&gl=PL&ocid=pdpshare
+
+2. **Install BurntToast module in PowerShell**  
+   Open PowerShell as Administrator and run:
+
+  ```powershell
+   Install-Module -Name BurntToast -Force -Scope CurrentUser
+   ```
+3. **Clone this repository**
+   ```bash
+   git clone https://github.com/Clarnc/Gascade_secrets
+   chmod +x gascade_secrets.sh start.sh
+   ```
+4. **Run the script**
+   ```bash
+   ./start.sh
+>>>>>>> 14aaaf2 (first commit)
