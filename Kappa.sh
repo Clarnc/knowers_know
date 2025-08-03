@@ -8,26 +8,22 @@ if [ ! -f "$LOGFILE" ]; then
   exit 1
 fi
 
-# Get the last "Replication count" block
-START="Net [Info]: Replication count by concrete type:"
-END="Net [Info]: Replication count by type:"
+# Get only the last full matching block
+block=$(awk '
+  /Net \[Info\]: Replication count by concrete type:/ {in_block=1; block=""; next}
+  in_block && /Net \[Info\]: Replication count by type:/ {in_block=0; found=block}
+  in_block {block = block $0 "\n"}
+  END { if (found) print found; else print "" }
+' "$LOGFILE")
 
-# Reverse the file, find the last block, and reverse again to restore order
-block=$(tac "$LOGFILE" | awk -v start="$END" -v end="$START" '
-  $0 ~ start {in_block=1}
-  in_block {print}
-  $0 ~ end && in_block {exit}
-' | tac)
-
+# Check that we got a block
 if [[ -z "$block" ]]; then
   echo "ERROR_NO_BLOCK_FOUND"
   exit 1
 fi
 
-# Now check for the target line
-TARGET="/Lotus/Sounds/Ambience/GrineerGalleon/GrnIntermediateSeven"
-
-if echo "$block" | grep -q "$TARGET"; then
+# Look for the specific audio line
+if echo "$block" | grep -q "/Lotus/Sounds/Ambience/GrineerGalleon/GrnIntermediateSeven"; then
   echo "✅"
 else
   echo "🟥"
