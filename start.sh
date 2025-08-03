@@ -23,7 +23,7 @@ case $choice in
   3)
     SCRIPT="./Kappa.sh"
     TITLE="Kappa"
-    ICON_PATH="KappaIcon.png"
+    ICON_PATH="Kappa_icon.png"
     ;;
   *)
     echo "Invalid choice. Exiting."
