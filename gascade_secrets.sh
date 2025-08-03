@@ -1,11 +1,8 @@
 #!/bin/bash
 
-
-
 WIN_USER=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
 LOGFILE="${1:-/mnt/c/Users/$WIN_USER/AppData/Local/Warframe/EE.log}"
 #LOGFILE="/mnt/c/Users/claus.CLARNCPC/AppData/Local/Warframe/EE.log"
-
 if [ ! -f "$LOGFILE" ]; then
   echo "Log file not found at $LOGFILE"
   echo "Usage: $0 [path_to_logfile]"
@@ -52,7 +49,7 @@ process_layer() {
   if [ "$count_backdrop_lines" -eq 1 ]; then
     echo "3"; return
   elif [ "$count_backdrop_lines" -eq 5 ]; then
-        echo "3x"; return
+    echo "3x"; return
   elif [ "$count_backdrop_lines" -eq 6 ]; then
     echo "4"; return
   elif [ "$count_backdrop_lines" -eq 9 ]; then
@@ -68,10 +65,55 @@ process_layer() {
   echo "3"
 }
 
-# Evaluate three specific rooms/layers
+# Function to check mid-layer backdrops
+check_between_layers() {
+  local block="$1"
+
+  # Target backdrops
+  local -a targets=(
+    "Conshort01BD"
+    "ConCornerShort03Backdrop"
+    "ConNSClsRmLocal"
+    "LocalSkyBox"
+    "ConNSJunctShort01"
+    "ConNSStrghtSht05Bkdrop"
+  )
+
+  local -A found=()
+  for target in "${targets[@]}"; do
+    found["$target"]=0
+  done
+
+  for layer in {3..5} 7; do
+    layer_data=$(echo "$block" | grep "/Layer255/Layer${layer}/" | grep 'as backdrop')
+    for target in "${targets[@]}"; do
+      if echo "$layer_data" | grep -q "$target"; then
+        found["$target"]=1
+      fi
+    done
+  done
+
+  total_found=0
+  for value in "${found[@]}"; do
+    (( total_found += value ))
+  done
+
+  if [ "$total_found" -eq "${#targets[@]}" ]; then
+    echo "godly"
+  elif [ "$total_found" -gt 0 ]; then
+    echo "mid"
+  else
+    echo "unknown"
+  fi
+}
+
+# Evaluate main rooms
 room1=$(process_layer 2 "$log_segment")
 room2=$(process_layer 6 "$log_segment")
 room3=$(process_layer 8 "$log_segment")
 
-echo "$room1 $room2 $room3"
+# Check in-between layers
+status=$(check_between_layers "$log_segment")
 
+# Final output
+echo "$room1 $room2 $room3 $status"
