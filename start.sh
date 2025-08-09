@@ -1,4 +1,5 @@
 #!/bin/bash
+cd /home/clarnwsl/knowers_know || { echo "Failed to cd"; exit 1; }
 
 # Menu
 clear
