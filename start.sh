@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd /home/clarnwsl/knowers_know || { echo "Failed to cd"; exit 1; }
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR" || { echo "Failed to change directory to script location."; exit 1; }
 
 while true; do
   clear
