@@ -50,7 +50,7 @@ while true; do
 
     if [[ "$output" != "$prev_output" ]]; then
       prev_output="$output"
-      echo "$output"
+      powershell.exe -Command "Import-Module BurntToast; New-BurntToastNotification -Text '$TITLE', '$output' -AppLogo '$WIN_ICON_PATH'"
     fi
 
     # Non-blocking check if user wants to quit
