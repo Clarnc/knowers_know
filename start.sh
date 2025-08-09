@@ -5,7 +5,7 @@ clear
 echo "Choose what you want to scan:"
 echo "[1] Tuvul Commons (Void Cascade)"
 echo "[2] Apollo (Disruption)"
-echo "[3] Kappa (Disruption) — Placeholder"
+echo "[3] Kappa (Disruption)"
 read -p "Enter choice [1-3]: " choice
 
 # Set script, title, and icon per choice
