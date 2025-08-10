@@ -15,8 +15,9 @@
 2. **Install BurntToast module in PowerShell**  
    Open PowerShell as Administrator and run:
 
-  ```powershell
+   ```powershell
    Install-Module -Name BurntToast -Force -Scope CurrentUser
+   Set-ExecutionPolicy RemoteSigned
    ```
 3. **Clone this repository**
    ```bash
