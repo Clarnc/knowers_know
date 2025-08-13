@@ -9,7 +9,7 @@ if [ ! -f "$LOGFILE" ]; then
   exit 1
 fi
 
-START="Adding a skin ramp texture for update:/EE/Materials/Util/AlienDiffuseScattering.png"
+START="missionType=MT_VOID_CASCADE"
 END="CreateState: CS_FIND_LEVEL_INFO"
 
 # Extract the last full section
@@ -40,8 +40,10 @@ process_layer() {
   if echo "$backdrop_names" | grep -q 'IntShuttleBayBackdrop'; then
     echo "5"; return
   elif echo "$backdrop_names" | grep -Eq 'IntParkBBackdrop|IntParkBackdrop'; then
-    echo "4"; return
-  elif echo "$backdrop_names" | grep -Eq 'IntLivingQuartersBackdrop|IntLunaroCourtBackdrop'; then
+    echo "4"; 
+  elif echo "$backdrop_names" | grep -Eq 'IntLunaroCourtBackdrop'; then
+    echo "3L"; return
+  elif echo "$backdrop_names" | grep -Eq 'IntLivingQuartersBackdrop'; then
     echo "3"; return
   fi
 
