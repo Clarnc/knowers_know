@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WIN_USER=$(cmd.exe /c "echo %USERPROFILE%" 2>/dev/null | tr -d '\r' | sed 's#C:\\#c/#;s#\\#/#g')
-LOGFILE="${1:-$WIN_USER/AppData/Local/Warframe/EE.log}"
+LOGFILE="${1:-/mnt/$WIN_USER/AppData/Local/Warframe/EE.log}"
 
 #LOGFILE="/mnt/c/Users/claus.CLARNCPC/AppData/Local/Warframe/EE.log"
 if [ ! -f "$LOGFILE" ]; then
