@@ -38,15 +38,17 @@ process_layer() {
   local backdrop_names=$(echo "$backdrops" | grep -oP '\[\K[^]]+' | grep -vE 'Info|Error')
 
   # Rule 1: Named backdrops override everything
+ 
   if echo "$backdrop_names" | grep -q 'IntShuttleBayBackdrop'; then
     echo "5"; return
   elif echo "$backdrop_names" | grep -Eq 'IntParkBBackdrop|IntParkBackdrop'; then
-    echo "4"; 
+    echo "4"; return
   elif echo "$backdrop_names" | grep -Eq 'IntLunaroCourtBackdrop'; then
     echo "3L"; return
   elif echo "$backdrop_names" | grep -Eq 'IntLivingQuartersBackdrop'; then
     echo "3"; return
   fi
+
 
   # Rule 3: Adjusted based on count of backdrop lines
   if [ "$count_backdrop_lines" -eq 1 ]; then
