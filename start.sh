@@ -9,6 +9,7 @@ while true; do
   echo "[1] Tuvul Commons (Void Cascade)"
   echo "[2] Apollo (Disruption)"
   echo "[3] Kappa (Disruption)"
+  echo "[4] Armatus (Disruption)"
   echo "[q] Quit"
   read -p "Enter choice [1-3, q]: " choice
 
@@ -26,6 +27,11 @@ while true; do
     3)
       SCRIPT="./Kappa.sh"
       TITLE="Kappa"
+      ICON_PATH="Kappa_icon.png"
+      ;;
+    4)
+      SCRIPT="./Armatus.sh"
+      TITLE="Armatus"
       ICON_PATH="Kappa_icon.png"
       ;;
     q|Q)

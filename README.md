@@ -23,7 +23,7 @@
    ```bash
    git clone https://github.com/Clarnc/knowers_know
    cd knowers_know/
-   chmod +x Apollo.sh Kappa.sh gascade_secrets.sh start.sh
+   chmod +x Apollo.sh Kappa.sh Armatus.sh gascade_secrets.sh start.sh
    ```
 4. **Run the script**
    ```bash
