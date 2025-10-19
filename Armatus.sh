@@ -11,7 +11,7 @@ if [ ! -f "$LOGFILE" ]; then
 fi
 
 # Start/end markers for log block
-START="Net \[Info\]: Replication count by concrete type:"
+START="Sys [Info]: CreateState: CS_PREPARE"
 END="Net \[Info\]: Replication count by type:"
 
 # Extract the last matching block
@@ -35,6 +35,7 @@ declare -A tile_paths=(
   ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiPortcullisDoorOpenSeq"]="Torso"
   ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiIntAtriumWindBlastSeq"]="Mirror"
   ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiConJunctionServiceDoorCloseSeq"]="Mirror"
+  ["/Lotus/Levels/EntratiLab/IntTerrarium/Scope"]="Terrarium"
 )
 
 matches=()
@@ -45,12 +46,6 @@ for path in "${!tile_paths[@]}"; do
     matches+=("${tile_paths[$path]}")
   fi
 done
-
-# Check for Terrarium separately
-terrarium_line="/Lotus/Levels/EntratiLab/IntTerrarium/Scope"
-if grep -Fq "$terrarium_line" "$LOGFILE"; then
-  matches+=("Terrarium")
-fi
 
 # If Terrarium or Piston found → skip
 if [[ " ${matches[*]} " =~ " Terrarium " ]] || [[ " ${matches[*]} " =~ " Piston " ]]; then
