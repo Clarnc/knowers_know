@@ -32,9 +32,9 @@ declare -A tile_paths=(
   ["/Lotus/Sounds/Ambience/Entrati/Props/EntratiDanteUnboundPistonMachineSeq"]="Piston"
   ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiGlassSphereVoidShakeSeq"]="Sphere"
   ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiTrainPassbySeq"]="Train"
-  ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiPortcullisDoorOpenSeq"]="Torso"
+  ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiPortcullisDoorOpenSeq"]="TorsoA"
   ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiIntAtriumWindBlastSeq"]="Mirror"
-  ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiConJunctionServiceDoorCloseSeq"]="Mirror"
+  ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiConJunctionServiceDoorCloseSeq"]="TorsoB"
   ["/Lotus/Levels/EntratiLab/IntTerrarium/Scope"]="Terrarium"
 )
 
@@ -48,7 +48,7 @@ for path in "${!tile_paths[@]}"; do
 done
 
 # If Terrarium or Piston found → skip
-if [[ " ${matches[*]} " =~ " Terrarium " ]] || [[ " ${matches[*]} " =~ " Piston " ]]; then
+if [[ " ${matches[*]} " =~ " Terrarium " ]] || [[ " ${matches[*]} " =~ " Piston " ]] || [[ " ${matches[*]} " =~ " TorsoB " ]] || [[ " ${matches[*]} " =~ " Sphere " ]] ; then
   echo "Bad tile. Skip"
   exit 0
 fi
