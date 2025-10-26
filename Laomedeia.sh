@@ -12,7 +12,7 @@ fi
 
 # Start/end markers for replication section
 START="ThemedSquadOverlay.lua: Mission name: Laomedeia (Neptune)"
-END="Net \[Info\]: Replication count by type:"
+END="Net [Info]: Replication count by type:"
 
 # Extract the latest replication block
 log_segment=$(tac "$LOGFILE" | awk -v start="$END" -v end="$START" '
