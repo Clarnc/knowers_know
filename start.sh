@@ -37,7 +37,7 @@ while true; do
       ;;
     5)
       SCRIPT="./Laomedeia.sh"
-      TITLE="Armatus"
+      TITLE="Laomedeia"
       ICON_PATH="Icons/Laomedeia_icon.png"
       ;;
     q|Q)

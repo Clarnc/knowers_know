@@ -51,7 +51,7 @@ for path in "${!tile_paths[@]}"; do
 done
 
 # Only these tiles are allowed
-allowed=("GunBattery" "Portals" "SabotageCore" "Bridge")
+allowed=("GunBattery" "Portals" "SabotageCore" "Bridge" "GoldHand")
 
 filtered=()
 for match in "${matches[@]}"; do
