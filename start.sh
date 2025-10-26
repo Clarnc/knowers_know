@@ -10,29 +10,35 @@ while true; do
   echo "[2] Apollo (Disruption)"
   echo "[3] Kappa (Disruption)"
   echo "[4] Armatus (Disruption)"
+  echo "[5] Laomedeia (Disruption)"
   echo "[q] Quit"
-  read -p "Enter choice [1-3, q]: " choice
+  read -p "Enter choice [1-5, q]: " choice
 
   case $choice in
     1)
       SCRIPT="./gascade_secrets.sh"
       TITLE="Tuvul Commons"
-      ICON_PATH="ThraxPlasm.png"
+      ICON_PATH="Icons/Tuvul_Commons_icon.png"
       ;;
     2)
       SCRIPT="./Apollo.sh"
       TITLE="Apollo"
-      ICON_PATH="LuaDisruption.png"
+      ICON_PATH="Icons/Apollo_icon.png"
       ;;
     3)
       SCRIPT="./Kappa.sh"
       TITLE="Kappa"
-      ICON_PATH="Kappa_icon.png"
+      ICON_PATH="Icons/Kappa_icon.png"
       ;;
     4)
       SCRIPT="./Armatus.sh"
       TITLE="Armatus"
-      ICON_PATH="Kappa_icon.png"
+      ICON_PATH="Icons/Armatus_icon.png"
+      ;;
+    5)
+      SCRIPT="./Laomedeia.sh"
+      TITLE="Armatus"
+      ICON_PATH="Icons/Laomedeia_icon.png"
       ;;
     q|Q)
       echo "Exiting."
