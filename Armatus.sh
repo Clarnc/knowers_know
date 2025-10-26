@@ -11,7 +11,7 @@ if [ ! -f "$LOGFILE" ]; then
 fi
 
 # Start/end markers for log block
-START="Sys [Info]: CreateState: CS_PREPARE"
+START="ThemedSquadOverlay.lua: Mission name: Armatus (Deimos)
 END="Net \[Info\]: Replication count by type:"
 
 # Extract the last matching block

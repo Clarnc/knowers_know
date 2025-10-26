@@ -11,7 +11,7 @@ if [ ! -f "$LOGFILE" ]; then
 fi
 
 # Start/end markers for replication section
-START="Sys [Info]: CreateState: CS_FULL_UPDATE"
+START="ThemedSquadOverlay.lua: Mission name: Laomedeia (Neptune)"
 END="Net \[Info\]: Replication count by type:"
 
 # Extract the latest replication block
@@ -36,6 +36,7 @@ declare -A tile_paths=(
   ["/Lotus/Sounds/Ambience/CorpusShipRemaster/ObjSabotageCore/CrpShipSabotageCoreSpinningPillarLoopSeq"]="SabotageCore"
   ["/Lotus/Sounds/Ambience/CorpusShipRemaster/Gameplay/CrpShipTemplePyramidRevealSeq"]="Pyramid"
   ["/Lotus/Sounds/Ambience/CorpusShipRemaster/CapSmallShowroom/CrpShipShowroomShipArriveBSeq"]="GoldHand"
+  ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntLarge VentRoomOne/CrpShipFanLargeLoopSeq"]="VentRoom"
 )
 
 matches=()
