@@ -3,7 +3,6 @@
 WIN_USER=$(cmd.exe /c "echo %USERPROFILE%" 2>/dev/null | tr -d '\r' | sed 's#C:\\#c/#;s#\\#/#g')
 LOGFILE="${1:-/mnt/$WIN_USER/AppData/Local/Warframe/EE.log}"
 
-#LOGFILE="/mnt/c/Users/claus.CLARNCPC/AppData/Local/Warframe/EE.log"
 if [ ! -f "$LOGFILE" ]; then
   echo "Log file not found at $LOGFILE"
   echo "Usage: $0 [path_to_logfile]"
@@ -58,7 +57,7 @@ process_layer() {
   elif [ "$count_backdrop_lines" -eq 6 ]; then
     echo "4"; return
   elif [ "$count_backdrop_lines" -eq 9 ]; then
-    echo "3"; return
+    echo "3Ag"; return
   fi
 
   # Rule 2: If there are errors related to the layer
