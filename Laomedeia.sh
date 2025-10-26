@@ -37,6 +37,8 @@ declare -A tile_paths=(
   ["/Lotus/Sounds/Ambience/CorpusShipRemaster/Gameplay/CrpShipTemplePyramidRevealSeq"]="Pyramid"
   ["/Lotus/Sounds/Ambience/CorpusShipRemaster/CapSmallShowroom/CrpShipShowroomShipArriveBSeq"]="GoldHand"
   ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntLarge VentRoomOne/CrpShipFanLargeLoopSeq"]="VentRoom"
+  ["A valid backdrop ID was specified: VenusLowOrbit however no such backdrop zone was found!"]="Bridge"
+
 )
 
 matches=()
@@ -47,11 +49,6 @@ for path in "${!tile_paths[@]}"; do
     matches+=("${tile_paths[$path]}")
   fi
 done
-
-# Check for Bridge (special line)
-if grep -Fq "A valid backdrop ID was specified: VenusLowOrbit however no such backdrop zone was found!" "$LOGFILE"; then
-  matches+=("Bridge")
-fi
 
 # Only these tiles are allowed
 allowed=("GunBattery" "Portals" "SabotageCore" "Bridge")
