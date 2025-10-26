@@ -53,19 +53,16 @@ done
 # Only these tiles are allowed
 allowed=("GunBattery" "Portals" "SabotageCore" "Bridge")
 
-# If no matches, skip
-if [ "${#matches[@]}" -eq 0 ]; then
-  echo "Bad tile. Skip"
-  exit 0
-fi
-
-# If any disallowed tile appears → skip
+filtered=()
 for match in "${matches[@]}"; do
-  if [[ ! " ${allowed[*]} " =~ " ${match} " ]]; then
-    echo "Bad tile. Skip"
-    exit 0
+  if [[ " ${allowed[*]} " =~ " ${match} " ]]; then
+    filtered+=("$match")
   fi
 done
 
-# Otherwise, print valid tiles
-echo "${matches[@]}"
+# Only show if 2 or more valid tiles detected
+if [ "${#filtered[@]}" -ge 2 ]; then
+  echo "${filtered[@]}"
+else
+  echo "Bad tile. Skip"
+fi
