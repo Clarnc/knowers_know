@@ -1,29 +1,22 @@
 #!/bin/bash
-
 WIN_USER=$(cmd.exe /c "echo %USERPROFILE%" 2>/dev/null | tr -d '\r' | sed 's#C:\\#c/#;s#\\#/#g')
 LOGFILE="${1:-/mnt/$WIN_USER/AppData/Local/Warframe/EE.log}"
 
 if [ ! -f "$LOGFILE" ]; then
   echo "Log file not found at $LOGFILE"
-  echo "Usage: $0 [path_to_logfile]"
   exit 1
 fi
 
 START="missionType=MT_VOID_CASCADE"
 END="CreateState: CS_FIND_LEVEL_INFO"
 
-# Extract the last full section
-log_segment=$(awk -v start="$START" -v end="$END" '
-  $0 ~ start {buffer=""; in_block=1}
-  in_block {buffer = buffer $0 "\n"}
-  $0 ~ end && in_block {last_block = buffer; in_block=0}
-  END {if (last_block) print last_block; else print "ERROR_NO_BLOCK_FOUND" > "/dev/stderr"}
-' "$LOGFILE")
+log_segment=$(tac "$LOGFILE" | awk -v start="$START" -v end="$END" '
+  index($0, end) {in_block=1}
+  in_block {block = $0 "\n" block}
+  index($0, start) && in_block {print block; exit}
+')
 
-if [[ -z "$log_segment" || "$log_segment" == *ERROR_NO_BLOCK_FOUND* ]]; then
-  echo "Error: Could not find log section with AlienDiffuseScattering block."
-  exit 1
-fi
+[[ -z "$log_segment" ]] && { echo "Error: Could not find cascade section."; exit 1; }
 
 # Function to process a specific layer
 process_layer() {
