@@ -23,7 +23,7 @@ if [ -z "$LOGFILE" ] || [ ! -f "$LOGFILE" ]; then
 fi
 
 START="ThemedSquadOverlay.lua: Mission name: Apollo (Lua)"
-END="Net \\[Info\\]: Replication count by type:"
+END="Net [Info]: Replication count by type:"
 
 log_segment=$(tac "$LOGFILE" | awk -v start="$END" -v end="$START" '
   index($0, start) {found_start=1}
