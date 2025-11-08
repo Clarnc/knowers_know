@@ -1,16 +1,30 @@
-#!/bin/bash
-WIN_USER=$(cmd.exe /c "echo %USERPROFILE%" 2>/dev/null | tr -d '\r' | sed 's#C:\\#c/#;s#\\#/#g')
-LOGFILE="${1:-/mnt/$WIN_USER/AppData/Local/Warframe/EE.log}"
+#!/usr/bin/env bash
+set -euo pipefail
 
-if [ ! -f "$LOGFILE" ]; then
-  echo "Log file not found at $LOGFILE"
+detect_logfile() {
+  if grep -qi microsoft /proc/version 2>/dev/null; then
+    local win_user
+    win_user=$(cmd.exe /c "echo %USERPROFILE%" 2>/dev/null | tr -d '\r' || true)
+    win_user=$(printf "%s" "$win_user" | sed 's#C:\\#c/#;s#\\#/#g')
+    printf "%s" "/mnt/${win_user}/AppData/Local/Warframe/EE.log"
+    return 0
+  fi
+  local compat_base="$HOME/.local/share/Steam/steamapps/compatdata"
+  local candidate="$compat_base/230410/pfx/drive_c/users/steamuser/AppData/Local/Warframe/EE.log"
+  [ -f "$candidate" ] && { printf "%s" "$candidate"; return 0; }
+  find "$HOME/.local/share/Steam/steamapps/compatdata" -maxdepth 4 -type f -iname 'EE.log' -path "*/pfx/*/AppData/*/Warframe/*" 2>/dev/null | head -n1
+}
+
+LOGFILE="${1:-$(detect_logfile)}"
+
+if [ -z "$LOGFILE" ] || [ ! -f "$LOGFILE" ]; then
+  echo "Log file not found at ${LOGFILE:-<none>}"
   exit 1
 fi
 
 START="ThemedSquadOverlay.lua: Mission name: Apollo (Lua)"
-END="Net \[Info\]: Replication count by type:"
+END="Net \\[Info\\]: Replication count by type:"
 
-# Efficient bottom-up read
 log_segment=$(tac "$LOGFILE" | awk -v start="$END" -v end="$START" '
   index($0, start) {found_start=1}
   found_start {block = $0 "\n" block}
