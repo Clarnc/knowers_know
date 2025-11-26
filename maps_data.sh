@@ -68,6 +68,7 @@ get_map_data() {
         ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntLargeVentRoomOne/CrpShipFanLargeLoop"]="VentRoom"
         ["A valid backdrop ID was specified: VenusLowOrbit however no such backdrop zone was found!"]="Bridge"
       )
+      bad_tiles=("RepairBay" "VentRoom" "Pyramid" "Reactor" "Hangar")
       allowed_tiles=("GunBattery" "Portals" "SabotageCore" "Bridge" "GoldHand")
       min_matches=2
       ;;
