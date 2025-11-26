@@ -102,10 +102,9 @@ copy_icon_to_win_temp() {
 update_tail_cache() {
   tail -n "$TAIL_LINES" "$LOGFILE" > "$LOG_TAIL_FILE"
 }
-
 run_check_script() {
   local mission="$1"
-  ./check.sh "$LOG_TAIL_FILE" "$mission" 2>/dev/null || echo "Bad tile. Skip"
+  ./check.sh "$LOG_TAIL_FILE" "$mission" || echo "Bad tile. Skip"
 }
 get_current_mission() {
   local log="$1"
@@ -189,9 +188,11 @@ while true; do
   fi
 
   if [ "$current_mission" != "unknown" ]; then
-    output="$(run_check_script "$current_mission")"
-    if [ "$output" != "$prev_output" ]; then
-      prev_output="$output"
+    full_output=$(/bin/bash -c "./check.sh \"$LOG_TAIL_FILE\" \"$current_mission\" 2>&1 || echo \"Bad tile. Skip\"")
+    if [ "$full_output" != "$prev_output" ]; then
+      echo "$full_output"
+      output=$(echo "$full_output" | grep -v "Detected tiles" | grep -v "No tiles detected" | grep -v "Detected rooms" | tail -n 1)
+      prev_output="$full_output"
       if [[ "$output" != "Bad tile. Skip" ]] && [[ "$output" != *"Error:"* ]]; then
         send_notification "$TITLE" "$output" "$ICON_PATH_TO_USE"
       fi

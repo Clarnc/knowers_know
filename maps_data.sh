@@ -1,7 +1,6 @@
 #!/bin/bash
 # maps_data.sh - Data for each mission/map
 # Sourced by check.sh
-
 get_map_data() {
   local mission="$1"
   unset tile_paths bad_tiles allowed_tiles min_matches
@@ -14,7 +13,7 @@ get_map_data() {
     apollo)
       map_type="sound_match"
       block_start="ThemedSquadOverlay.lua: Mission name: Apollo (Lua)"
-      block_end="Net \[Info\]: Replication count by type:"
+      block_end="Net [Info]: Replication count by type:"
       declare -gA tile_paths=(
         ["/Lotus/Sounds/Ambience/OrokinMoon/MoonIntHallsOfJudgement/"]="HallsOfJudgement"
         ["/Lotus/Sounds/Ambience/OrokinMoon/MoonIntCloister/"]="Cloister"
@@ -22,21 +21,22 @@ get_map_data() {
         ["/Lotus/Sounds/Ambience/OrokinMoon/MoonIntStealth/"]="Stealth"
         ["/Lotus/Sounds/Ambience/OrokinMoon/MoonIntPower/"]="Power"
       )
+      bad_tiles=("Cloister" "Stealth")
       allowed_tiles=("Power" "HallsOfJudgement" "Endurance")
       min_matches=2
       ;;
     armatus)
       map_type="sound_match"
       block_start="ThemedSquadOverlay.lua: Mission name: Armatus (Deimos)"
-      block_end="Net \[Info\]: Replication count by type:"
+      block_end="Net [Info]: Replication count by type:"
       declare -gA tile_paths=(
-        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiIntEchoesSpawnMachineElectricityZapASeq"]="Circle"
-        ["/Lotus/Sounds/Ambience/Entrati/Props/EntratiDanteUnboundPistonMachineSeq"]="Piston"
-        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiGlassSphereVoidShakeSeq"]="Sphere"
-        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiTrainPassbySeq"]="Train"
-        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiPortcullisDoorOpenSeq"]="TorsoA"
-        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiIntAtriumWindBlastSeq"]="Mirror"
-        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiConJunctionServiceDoorCloseSeq"]="TorsoB"
+        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiIntEchoesSpawnMachineElectricityZap"]="Circle"
+        ["/Lotus/Sounds/Ambience/Entrati/Props/EntratiDanteUnboundPistonMachine"]="Piston"
+        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiGlassSphereVoidShake"]="Sphere"
+        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiTrainPassby"]="Train"
+        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiPortcullisDoorOpen"]="TorsoA"
+        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiIntAtriumWindBlast"]="Mirror"
+        ["/Lotus/Sounds/Ambience/Entrati/Gameplay/EntratiConJunctionServiceDoorClose"]="TorsoB"
         ["/Lotus/Levels/EntratiLab/IntTerrarium/Scope"]="Terrarium"
       )
       bad_tiles=("Terrarium" "Piston" "TorsoB" "Sphere")
@@ -45,7 +45,7 @@ get_map_data() {
     kappa)
       map_type="sound_match"
       block_start="ThemedSquadOverlay.lua: Mission name: Kappa (Sedna)"
-      block_end="Net \[Info\]: Replication count by type:"
+      block_end="Net [Info]: Replication count by type:"
       declare -gA tile_paths=(
         ["/Lotus/Sounds/Ambience/GrineerGalleon/GrnIntermediateSeven"]="GrnIntermediateSeven"
       )
@@ -55,17 +55,17 @@ get_map_data() {
     laomedeia)
       map_type="sound_match"
       block_start="ThemedSquadOverlay.lua: Mission name: Laomedeia (Neptune)"
-      block_end="Net \[Info\]: Replication count by type:"
+      block_end="Net [Info]: Replication count by type:"
       declare -gA tile_paths=(
-        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntWarehouseTwo/CrpShipVoidPortalSeq"]="Portals"
-        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntGunBattery/CrpShipGunBatteryVoidThunderClapsSeq"]="GunBattery"
-        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntHangarOne/CrpShipDataPillarLoopASeq"]="Hangar"
-        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntReactorOne/CrpShipSpinningReactorChargeSeq"]="Reactor"
-        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntSpacecraftRepairBayOne/CrpShipTrainDroneLoopSeq"]="RepairBay"
-        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/ObjSabotageCore/CrpShipSabotageCoreSpinningPillarLoopSeq"]="SabotageCore"
-        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/Gameplay/CrpShipTemplePyramidRevealSeq"]="Pyramid"
-        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/CapSmallShowroom/CrpShipShowroomShipArriveBSeq"]="GoldHand"
-        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntLargeVentRoomOne/CrpShipFanLargeLoopSeq"]="VentRoom"
+        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntWarehouseTwo/CrpShipVoidPortal"]="Portals"
+        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntGunBattery/CrpShipGunBatteryVoidThunderClaps"]="GunBattery"
+        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntHangarOne/CrpShipDataPillarLoop"]="Hangar"
+        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntReactorOne/CrpShipSpinningReactorCharge"]="Reactor"
+        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntSpacecraftRepairBayOne/CrpShipTrainDroneLoop"]="RepairBay"
+        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/ObjSabotageCore/CrpShipSabotageCoreSpinningPillarLoop"]="SabotageCore"
+        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/Gameplay/CrpShipTemplePyramidReveal"]="Pyramid"
+        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/CapSmallShowroom/CrpShipShowroomShipArrive"]="GoldHand"
+        ["/Lotus/Sounds/Ambience/CorpusShipRemaster/IntLargeVentRoomOne/CrpShipFanLargeLoop"]="VentRoom"
         ["A valid backdrop ID was specified: VenusLowOrbit however no such backdrop zone was found!"]="Bridge"
       )
       allowed_tiles=("GunBattery" "Portals" "SabotageCore" "Bridge" "GoldHand")
