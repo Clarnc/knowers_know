@@ -159,7 +159,6 @@ update_tail_cache
 
 while true; do
   current_mission=$(get_current_mission "$LOG_TAIL_FILE")
-
   if [ "$current_mission" != "$prev_mission" ] && [ "$current_mission" != "unknown" ]; then
     prev_mission="$current_mission"
     prev_output=""  # Reset output on mission change
