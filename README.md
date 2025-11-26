@@ -23,7 +23,7 @@
    ```bash
    git clone https://github.com/Clarnc/knowers_know
    cd knowers_know/
-   chmod +x Apollo.sh Kappa.sh Armatus.sh Laomedeia.sh Tuvul_ommons.sh start.sh
+   chmod +x Apollo.sh Kappa.sh Armatus.sh Laomedeia.sh Tuvul_Commons.sh start.sh
    ```
 4. **Run the script**
    ```bash
