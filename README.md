@@ -1,12 +1,12 @@
 
-# Gascade_secrets
+#Gascade_secrets
 
-## Requirements
+## Requirements (Windows only)
 
 - **WSL2** (Windows Subsystem for Linux)
 - **BurntToast PowerShell module** for notifications
 
-## Installation
+## Installation of Requirements (Windows only)
 
 1. **Enable WSL2**  
    If not already done, install WSL2 on your Windows machine.  
@@ -19,13 +19,14 @@
    Install-Module -Name BurntToast -Force -Scope CurrentUser
    Set-ExecutionPolicy RemoteSigned
    ```
-3. **Clone this repository**
+## Installation (Linux and WSL)
+1. **Clone this repository**
    ```bash
    git clone https://github.com/Clarnc/knowers_know
    cd knowers_know/
-   chmod +x maps_dat.sh check.sh start.sh
+   chmod +x maps_data.sh check.sh start.sh
    ```
-4. **Run the script**
+2. **Run the script**
    ```bash
    ./start.sh
 
