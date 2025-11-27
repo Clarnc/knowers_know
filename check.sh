@@ -79,12 +79,10 @@ case "$map_type" in
       local count_errors=$(echo "$errors" | wc -l)
       local backdrop_names=$(echo "$backdrops" | grep -oP '\[\K[^]]+' | grep -vE 'Info|Error')
 
-      # First: return the numeric code for notification (unchanged logic)
+      # Return numeric code for notification (unchanged logic)
       if echo "$backdrop_names" | grep -q 'IntShuttleBayBackdrop'; then
         echo "5"; return
-      elif echo "$backdrop_names" | grep -q 'IntParkBBackdrop'; then
-        echo "4"; return
-      elif echo "$backdrop_names" | grep -q 'IntParkBackdrop'; then
+      elif echo "$backdrop_names" | grep -Eq 'IntParkBBackdrop|IntParkBackdrop'; then
         echo "4"; return
       elif echo "$backdrop_names" | grep -q 'IntLunaroCourtBackdrop'; then
         echo "3L"; return
@@ -106,15 +104,15 @@ case "$map_type" in
       echo "3"
     }
 
-    # Get numeric codes for notification
+    # Get numeric codes
     room1_num=$(process_layer 2 "$log_segment")
     room2_num=$(process_layer 6 "$log_segment")
     room3_num=$(process_layer 8 "$log_segment")
 
-    # Human-readable names for terminal output
-   name_for() {
+    # Human-readable names — FIXED VERSION
+    name_for() {
       local code="$1"
-      local layer="$2"
+      local layer="$2"  # Required for per-layer computation
 
       # Re-compute per-layer locals
       local backdrops=$(echo "$log_segment" | grep "/Layer255/Layer${layer}/" | grep 'as backdrop')
@@ -124,20 +122,20 @@ case "$map_type" in
       local count_errors=$(echo "$errors" | wc -l)
 
       case "$code" in
-        5)      echo "Hangar" ;;
+        5) echo "Hangar" ;;
         4)
           if echo "$backdrop_names" | grep -q 'IntParkBBackdrop'; then
-            echo "AlbrechtPark"
-          elif echo "$backdrop_names" | grep -q 'IntParkBackdrop'; then
             echo "SerenityLevels"
-          elif [ "$count_backdrop_lines" -eq 6 ]; then
-            echo "AngelRoots"
+          elif echo "$backdrop_names" | grep -q 'IntParkBackdrop'; then
+            echo "AlbrechtPark"
           elif [ "$count_errors" -ge 1 ]; then
             echo "SchoolYard"
+          elif [ "$count_backdrop_lines" -eq 6 ]; then
+            echo "AngelRoots"
           else
-            echo "AngelRoots"  # Fallback for other 4
+            echo "AngelRoots"  # Fallback only if needed
           fi ;;
-        3L)     echo "LunaroCourt" ;;
+        3L) echo "LunaroCourt" ;;
         3)
           if echo "$backdrop_names" | grep -q 'IntLivingQuartersBackdrop'; then
             echo "LivingQuarters"
@@ -146,20 +144,20 @@ case "$map_type" in
           else
             echo "LivingQuarters"
           fi ;;
-        3x)     echo "Cargo/Amphi/Brig" ;;
-        3Ag)    echo "AgriZone" ;;
-        *)      echo "Unknown ($code)" ;;
+        3x) echo "Cargo/Amphi/Brig" ;;
+        3Ag) echo "AgriZone" ;;
+        *) echo "Unknown ($code)" ;;
       esac
     }
-    # Resolve names (layer-specific, so we re-run logic slightly for accuracy)
-    room1_name=$(name_for "$room1_num")
-    room2_name=$(name_for "$room2_num")
-    room3_name=$(name_for "$room3_num")
+
+    room1_name=$(name_for "$room1_num" 2)
+    room2_name=$(name_for "$room2_num" 6)
+    room3_name=$(name_for "$room3_num" 8)
 
     # Terminal output: beautiful names
     echo "Detected rooms for $MISSION: $room1_name | $room2_name | $room3_name  (codes: $room1_num $room2_num $room3_num)" >&2
 
-    # Notification stays pure numbers only
+    # Notification: only numbers (unchanged)
     echo "$room1_num $room2_num $room3_num"
     ;;
 esac
