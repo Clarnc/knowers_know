@@ -52,6 +52,16 @@ get_map_data() {
       allowed_tiles=("GrnIntermediateSeven")
       min_matches=1
       ;;
+    ur)
+     map_type="sound_match"
+     block_start="ThemedSquadOverlay.lua: Mission name: Ur (Uranus)"
+     block_end="Net [Info]: Replication count by type:"
+     declare -gA tile_paths=(
+	["/Lotus/Sounds/Ambience/GrineerGalleon/GrnIntermediateSeven"]="GrnIntermediateSeven"
+    )
+    allowed_tiles=("GrnIntermediateSeven")
+    min_matches=1
+    ;;
     laomedeia)
       map_type="sound_match"
       block_start="ThemedSquadOverlay.lua: Mission name: Laomedeia (Neptune)"
