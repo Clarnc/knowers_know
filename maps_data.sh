@@ -89,8 +89,10 @@ get_map_data() {
       declare -gA tile_paths=(
 	["/Lotus/Levels/GrineerSettlement/CmpIntermediate06"]="CmpIntermediate06"
 	["/Lotus/Sounds/Ambience/GrineerSettlement/CmpIntermediate01"]="CmpIntermediate01"
+        ["/Lotus/Sounds/Ambience/GrineerSettlement/CmpCapture"]="CmpCapture"
+	["/Lotus/Levels/GrineerSettlement/CmpAssassinate"]="CmpAssassinate"
        )
-     bad_tiles=("CmpIntermediate01")
+     bad_tiles=("CmpIntermediate01" "CmpAssassinate" "CmpCapture")
      allowed_tiles=("CmpIntermediate06")
      min_matches=1
      ;;
