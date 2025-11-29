@@ -122,6 +122,7 @@ get_current_mission() {
       "Armatus (Deimos)") echo "armatus" ;;
       "Laomedeia (Neptune)") echo "laomedeia" ;;
       "Ur (Uranus)") echo "ur";;
+      "Olympus (Mars)")echo "olympus";;
       *) echo "unknown" ;;
     esac
   else
@@ -170,7 +171,8 @@ while true; do
       kappa) TITLE="Kappa"; ICON_PATH="Icons/Kappa_icon.png";;
       armatus) TITLE="Armatus"; ICON_PATH="Icons/Armatus_icon.png";;
       laomedeia) TITLE="Laomedeia"; ICON_PATH="Icons/Laomedeia_icon.png";;
-      ur) TITLE="Ur"; ICON_PATH="Icons/Kappa_icon.png";;
+      ur) TITLE="Ur"; ICON_PATH="Icons/Ur_icon.png";;
+      olympus) TITLE="Olympus"; ICON_PATH="Icons/Olympus_icon.png";;
     esac
 
     echo "Detected new mission: $TITLE"

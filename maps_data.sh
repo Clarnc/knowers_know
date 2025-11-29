@@ -82,6 +82,18 @@ get_map_data() {
       allowed_tiles=("GunBattery" "Portals" "SabotageCore" "Bridge" "GoldHand")
       min_matches=2
       ;;
+    olympus)
+      map_type="sound_match"
+      block_start="ThemedSquadOverlay.lua: Mission name: Olympus (Mars)"
+      block_end="Net [Info]: Replication count by type:"
+      declare -gA tile_paths=(
+	["/Lotus/Levels/GrineerSettlement/CmpIntermediate06"]="CmpIntermediate06"
+	["/Lotus/Sounds/Ambience/GrineerSettlement/CmpIntermediate01"]="CmpIntermediate01"
+       )
+     bad_tiles=("CmpIntermediate01")
+     allowed_tiles=("CmpIntermediate06")
+     min_matches=1
+     ;;
     *)
       echo "Unknown mission: $mission"
       exit 1
