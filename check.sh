@@ -11,13 +11,24 @@ fi
 source ./maps_data.sh
 # Get data for this mission
 get_map_data "$MISSION"
-# EXACTLY like old working scripts: capture the loading block between mission name and replication
-log_segment=$(tac "$LOG_TAIL_FILE" | awk -v start="$block_end" -v end="$block_start" '
-  index($0, start) {found_start=1}
-  found_start {block = $0 "\n" block}
-  index($0, end) && found_start {print block; exit}
-')
-[[ -z "$log_segment" ]] && { echo "Error: Could not find block for $MISSION."; exit 1; }
+# Capture the loading block between mission name and replication using forward pass, only the last complete block
+log_segment=$(awk -v start="$block_start" -v end="$block_end" '
+  index($0, start) {
+    block = ""
+    collecting = 1
+    next
+  }
+  collecting {
+    block = block $0 "\n"
+  }
+  index($0, end) && collecting {
+    last_block = block $0 "\n"
+    collecting = 0
+  }
+END {
+  if (last_block) print last_block
+}' "$LOG_TAIL_FILE")
+[[ -z "$log_segment" ]] && { exit 0; }
 case "$map_type" in
   sound_match)
     matches=()
@@ -63,7 +74,11 @@ case "$map_type" in
       elif [ "${#filtered[@]}" -ge "$min_matches" ]; then
         echo "${filtered[@]}"
       else
-        echo "Bad tile. Skip"
+        if [ "$MISSION" == "olympus" ]; then
+          echo "Worth checking"
+        else
+          echo "Bad tile. Skip"
+        fi
       fi
     else
       echo "Bad tile. Skip"

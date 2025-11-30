@@ -100,16 +100,16 @@ copy_icon_to_win_temp() {
 }
 
 update_tail_cache() {
-  tail -n "$TAIL_LINES" "$LOGFILE" > "$LOG_TAIL_FILE"
+  tail -n "$TAIL_LINES" "$LOGFILE" > "$LOG_TAIL_FILE" 2>/dev/null || true
 }
 run_check_script() {
   local mission="$1"
-  ./check.sh "$LOG_TAIL_FILE" "$mission" || echo "Bad tile. Skip"
+  ./check.sh "$LOG_TAIL_FILE" "$mission" 2>&1 || echo "Bad tile. Skip"
 }
 get_current_mission() {
   local log="$1"
-  # Get the latest mission indicator line
-  indicator_line=$(tac "$log" | grep -m1 -E "ThemedSquadOverlay.lua: Mission name:|missionType=MT_VOID_CASCADE")
+  # Get the latest mission indicator line using forward pass
+  indicator_line=$(awk '/ThemedSquadOverlay.lua: Mission name:|missionType=MT_VOID_CASCADE/ { last = $0 } END {print last}' "$log")
   if [[ "$indicator_line" =~ "missionType=MT_VOID_CASCADE" ]]; then
     echo "tuvul_commons"
   elif [[ "$indicator_line" =~ "ThemedSquadOverlay.lua: Mission name:" ]]; then
@@ -150,11 +150,15 @@ echo "Monitoring Warframe log for supported missions... (Ctrl-C to quit)"
 
 prev_mission=""
 prev_output=""
+prev_sent_output=""
 last_size=0
 last_inode=0
 MISSION=""
 TITLE=""
 ICON_PATH_TO_USE=""
+counter=0
+prev_tiles=()
+prev_rooms=()
 
 update_tail_cache
 
@@ -164,6 +168,9 @@ while true; do
   if [ "$current_mission" != "$prev_mission" ] && [ "$current_mission" != "unknown" ]; then
     prev_mission="$current_mission"
     prev_output=""  # Reset output on mission change
+    prev_sent_output=""
+    prev_tiles=()   # Reset previous tiles on mission change
+    prev_rooms=()   # Reset previous rooms on mission change
 
     case "$current_mission" in
       tuvul_commons) TITLE="Tuvul Commons"; ICON_PATH="Icons/Tuvul_Commons_icon.png";;
@@ -192,13 +199,57 @@ while true; do
   fi
 
   if [ "$current_mission" != "unknown" ]; then
-    full_output=$(/bin/bash -c "./check.sh \"$LOG_TAIL_FILE\" \"$current_mission\" 2>&1 || echo \"Bad tile. Skip\"")
+    full_output=$(run_check_script "$current_mission")
     if [ "$full_output" != "$prev_output" ]; then
-      echo "$full_output"
-      output=$(echo "$full_output" | grep -v "Detected tiles" | grep -v "No tiles detected" | grep -v "Detected rooms" | tail -n 1)
+      counter=$((counter + 1))
+      # Prefix each line with [nnn]:
+      while IFS= read -r line; do
+        printf "[%03d]: %s\n" "$counter" "$line"
+      done <<< "$full_output"
+
+      # Reset prev_tiles/prev_rooms if no detection or error
+      no_tiles_line=$(echo "$full_output" | grep "No tiles detected" || true)
+      error_line=$(echo "$full_output" | grep "Error:" || true)
+      if [ -n "$no_tiles_line" ] || [ -n "$error_line" ]; then
+        prev_tiles=()
+      fi
+      no_rooms_line=$(echo "$full_output" | grep "No rooms detected" || true)  # If backdrop has this, but currently not
+      if [ -n "$no_rooms_line" ] || [ -n "$error_line" ]; then
+        prev_rooms=()
+      fi
+
+      # Extract tiles from full_output for duplicate check (sound_match missions)
+      detected_line=$(echo "$full_output" | grep "Detected tiles" || true)
+      if [ -n "$detected_line" ]; then
+        current_tiles=($(echo "$detected_line" | sed 's/Detected tiles for .*://'))
+        for tile in "${current_tiles[@]}"; do
+          if [[ " ${prev_tiles[*]} " =~ " ${tile} " ]]; then
+            printf "[%03d]: Duplicate tile from previous block: %s\n" "$counter" "$tile"
+          fi
+        done
+        prev_tiles=("${current_tiles[@]}")
+      fi
+
+      # Extract rooms from full_output for duplicate check (backdrop missions)
+      detected_rooms=$(echo "$full_output" | grep "Detected rooms" || true)
+      if [ -n "$detected_rooms" ]; then
+        current_rooms=$(echo "$detected_rooms" | sed 's/Detected rooms for .*://' | sed 's/ (codes: .*//')
+        # Assuming rooms are separated by | 
+        IFS='|' read -r -a current_rooms_array <<< "$current_rooms"
+        for room in "${current_rooms_array[@]}"; do
+          room=$(echo "$room" | xargs)  # Trim spaces
+          if [[ " ${prev_rooms[*]} " =~ " ${room} " ]]; then
+            printf "[%03d]: Duplicate room from previous block: %s\n" "$counter" "$room"
+          fi
+        done
+        prev_rooms=("${current_rooms_array[@]}")
+      fi
+
       prev_output="$full_output"
-      if [[ "$output" != "Bad tile. Skip" ]] && [[ "$output" != *"Error:"* ]]; then
+      output=$(echo "$full_output" | grep -v "Detected tiles" | grep -v "No tiles detected" | grep -v "Detected rooms" | tail -n 1)
+      if [[ "$output" != "Bad tile. Skip" ]] && [[ "$output" != *"Error:"* ]] && [ "$output" != "$prev_sent_output" ] && [ -n "$output" ]; then
         send_notification "$TITLE" "$output" "$ICON_PATH_TO_USE"
+        prev_sent_output="$output"
       fi
     fi
   fi
