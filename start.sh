@@ -182,7 +182,7 @@ while true; do
       laomedeia) TITLE="Laomedeia"; ICON_PATH="Icons/Laomedeia_icon.png";;
       ur) TITLE="Ur"; ICON_PATH="Icons/Ur_icon.png";;
       olympus) TITLE="Olympus"; ICON_PATH="Icons/Olympus_icon.png";;
-      tamu) TITLE="Tamu"; ICON_PATH="Icons/Tamu_icon.png";
+      tamu) TITLE="Tamu"; ICON_PATH="Icons/Tamu_icon.png";;
       ganymde) TITLE="Ganymede"; ICON_PATH="Icons/Ganymede_icon.png";;
     esac
 
