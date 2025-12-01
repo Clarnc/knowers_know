@@ -106,7 +106,24 @@ get_map_data() {
         ["/Lotus/Levels/GrineerFortress/FortIntShipTether/"]="Hologram"
        )
     bad_tiles=("ShipDock" "Hologram")
-    allowed_tiles=("InnerWard"
+    allowed_tiles=("InnerWard")
+    ;;
+   ganymede)
+     map_type="sound_match"
+     block_start="ThemedSquadOverlay.lua: Mission name: Ganymede (Jupiter)"
+     block_end="Net [Info]: Replication count by type:"
+     declare -gA tile_paths=(
+        ["/Lotus/Levels/CorpusGasCityRemaster/GasIntermediate16Alt/"]="GasIntermediate16"
+        ["/Lotus/Levels/CorpusGasCityRemaster/GasIntermediate14/"]="GasIntermediate14"
+        ["/Lotus/Levels/CorpusGasCityRemaster/GasIntermediate11/"]="GasIntermediate11"
+        ["/Lotus/Sounds/Ambience/CorpusGasCity/GasIntermediate05/"]="2Reactors"
+        ["/Lotus/Levels/CorpusGasCityRemaster/GasIntermediate01/"]="GasIntermediate01"
+        ["/Lotus/Sounds/Ambience/CorpusGasCity/GasSabotage/"]="1Reactor"
+        ["/Lotus/Levels/CorpusGasCityRemaster/GasMobileDefence/"]="BigSquare"
+       )
+    bad_tiles=("2Reactors" "GasIntermediate16"  "GasIntermediate14" "GasIntermediate11" "GasIntermediate01" "BigSquare")
+    allowed_tiles=("1Reactor" "2Reactors")
+    ;;
     *)
       echo "Unknown mission: $mission"
       exit 1
