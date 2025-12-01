@@ -107,6 +107,7 @@ get_map_data() {
        )
     bad_tiles=("ShipDock" "Hologram")
     allowed_tiles=("InnerWard")
+    min_matches=1
     ;;
    ganymede)
      map_type="sound_match"
@@ -123,6 +124,7 @@ get_map_data() {
        )
     bad_tiles=("2Reactors" "GasIntermediate16"  "GasIntermediate14" "GasIntermediate11" "GasIntermediate01" "BigSquare")
     allowed_tiles=("1Reactor" "2Reactors")
+    min_matches=2
     ;;
     *)
       echo "Unknown mission: $mission"
