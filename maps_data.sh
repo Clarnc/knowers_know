@@ -96,6 +96,17 @@ get_map_data() {
      allowed_tiles=("CmpIntermediate06")
      min_matches=1
      ;;
+   tamu)
+     map_type="sound_match"
+     block_start="ThemedSquadOverlay.lua: Mission name: Tamu (Kuva Fortress)"
+     block_end="Net [Info]: Replication count by type:"
+     declare -gA tile_paths=(
+        ["/Lotus/Sounds/Ambience/GrineerFortress/FortIntShipInnerWard/GrnFortressGrateOpenSeq"]="InnerWard"
+        ["/Lotus/Levels/GrineerFortress/FortIntShipDock/"]="ShipDock"
+        ["/Lotus/Levels/GrineerFortress/FortIntShipTether/"]="Hologram"
+       )
+    bad_tiles=("ShipDock" "Hologram")
+    allowed_tiles=("InnerWard"
     *)
       echo "Unknown mission: $mission"
       exit 1
