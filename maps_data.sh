@@ -122,7 +122,7 @@ get_map_data() {
         ["/Lotus/Sounds/Ambience/CorpusGasCity/GasSabotage/"]="1Reactor"
         ["/Lotus/Levels/CorpusGasCityRemaster/GasMobileDefence/"]="BigSquare"
        )
-    bad_tiles=("2Reactors" "GasIntermediate16"  "GasIntermediate14" "GasIntermediate11" "GasIntermediate01" "BigSquare")
+    bad_tiles=("GasIntermediate16"  "GasIntermediate14" "GasIntermediate11" "GasIntermediate01" "BigSquare")
     allowed_tiles=("1Reactor" "2Reactors")
     min_matches=2
     ;;

@@ -222,33 +222,6 @@ while true; do
         prev_rooms=()
       fi
 
-      # Extract tiles from full_output for duplicate check (sound_match missions)
-      detected_line=$(echo "$full_output" | grep "Detected tiles" || true)
-      if [ -n "$detected_line" ]; then
-        current_tiles=($(echo "$detected_line" | sed 's/Detected tiles for .*://'))
-        for tile in "${current_tiles[@]}"; do
-          if [[ " ${prev_tiles[*]} " =~ " ${tile} " ]]; then
-            printf "[%03d]: Duplicate tile from previous block: %s\n" "$counter" "$tile"
-          fi
-        done
-        prev_tiles=("${current_tiles[@]}")
-      fi
-
-      # Extract rooms from full_output for duplicate check (backdrop missions)
-      detected_rooms=$(echo "$full_output" | grep "Detected rooms" || true)
-      if [ -n "$detected_rooms" ]; then
-        current_rooms=$(echo "$detected_rooms" | sed 's/Detected rooms for .*://' | sed 's/ (codes: .*//')
-        # Assuming rooms are separated by | 
-        IFS='|' read -r -a current_rooms_array <<< "$current_rooms"
-        for room in "${current_rooms_array[@]}"; do
-          room=$(echo "$room" | xargs)  # Trim spaces
-          if [[ " ${prev_rooms[*]} " =~ " ${room} " ]]; then
-            printf "[%03d]: Duplicate room from previous block: %s\n" "$counter" "$room"
-          fi
-        done
-        prev_rooms=("${current_rooms_array[@]}")
-      fi
-
       prev_output="$full_output"
       output=$(echo "$full_output" | grep -v "Detected tiles" | grep -v "No tiles detected" | grep -v "Detected rooms" | tail -n 1)
       if [[ "$output" != "Bad tile. Skip" ]] && [[ "$output" != *"Error:"* ]] && [ "$output" != "$prev_sent_output" ] && [ -n "$output" ]; then
