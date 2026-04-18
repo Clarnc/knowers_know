@@ -10,6 +10,11 @@ get_map_data() {
       block_start="missionType=MT_VOID_CASCADE"
       block_end="CreateState: CS_FIND_LEVEL_INFO"
       ;;
+   everview_arc)
+      map_type="backdrop"
+      block_start="missionType=MT_CORRUPTION"
+      block_end="CreateState: CS_FIND_LEVEL_INFO"
+      ;;
     apollo)
       map_type="sound_match"
       block_start="ThemedSquadOverlay.lua: Mission name: Apollo (Lua)"

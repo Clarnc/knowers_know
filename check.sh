@@ -85,6 +85,18 @@ case "$map_type" in
     fi
     ;;
   backdrop)
+    case "$MISSION" in
+            "tuvul_commons")
+                l1=2; l2=6; l3=9
+                ;;
+            "everview_arc")
+                l1=3; l2=5; l3=9
+                ;;
+            *)
+                # Default fallback (e.g., your original 2 6 8)
+                l1=2; l2=6; l3=8
+                ;;
+        esac
     process_layer() {
       local layer=$1
       local block="$2"
@@ -108,7 +120,7 @@ case "$map_type" in
         echo "3"; return
       elif [ "$count_backdrop_lines" -eq 5 ]; then
         echo "3x"; return
-      elif [ "$count_backdrop_lines" -eq 6 ]; then
+      elif [ "$count_backdrop_lines" -eq 6 ]|| [ "$count_backdrop_lines" -eq 7 ]; then
         echo "4"; return
       elif [ "$count_backdrop_lines" -eq 9 ]; then
         echo "3Ag"; return
@@ -120,9 +132,9 @@ case "$map_type" in
     }
 
     # Get numeric codes
-    room1_num=$(process_layer 2 "$log_segment")
-    room2_num=$(process_layer 6 "$log_segment")
-    room3_num=$(process_layer 8 "$log_segment")
+    room1_num=$(process_layer "$l1" "$log_segment")
+    room2_num=$(process_layer "$l2" "$log_segment")
+    room3_num=$(process_layer "&l3" "$log_segment")
 
     # Human-readable names — FIXED VERSION
     name_for() {
@@ -145,7 +157,7 @@ case "$map_type" in
             echo "AlbrechtPark"
           elif [ "$count_errors" -ge 1 ]; then
             echo "SchoolYard"
-          elif [ "$count_backdrop_lines" -eq 6 ]; then
+          elif [ "$count_backdrop_lines" -eq 6 ]|| [ "$count_backdrop_lines" -eq 7 ]; then
             echo "AngelRoots"
           else
             echo "AngelRoots"  # Fallback only if needed
@@ -165,9 +177,9 @@ case "$map_type" in
       esac
     }
 
-    room1_name=$(name_for "$room1_num" 2)
-    room2_name=$(name_for "$room2_num" 6)
-    room3_name=$(name_for "$room3_num" 8)
+    room1_name=$(name_for "$room1_num" "$l1")
+    room2_name=$(name_for "$room2_num" "$l2")
+    room3_name=$(name_for "$room3_num" "$l3")
 
     # Terminal output: beautiful names
     echo "Detected rooms for $MISSION: $room1_name | $room2_name | $room3_name  (codes: $room1_num $room2_num $room3_num)" >&2

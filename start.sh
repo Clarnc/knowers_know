@@ -109,13 +109,16 @@ run_check_script() {
 get_current_mission() {
   local log="$1"
   # Get the latest mission indicator line using forward pass
-  indicator_line=$(awk '/ThemedSquadOverlay.lua: Mission name:|missionType=MT_VOID_CASCADE/ { last = $0 } END {print last}' "$log")
+  indicator_line=$(awk '/ThemedSquadOverlay.lua: Mission name:|missionType=MT_VOID_CASCADE|missionType=MT_CORRUPTION/ { last = $0 } END {print last}' "$log")
   if [[ "$indicator_line" =~ "missionType=MT_VOID_CASCADE" ]]; then
     echo "tuvul_commons"
+  elif [[ "$indicator_line" =~ "missionType=MT_CORRUPTION" ]]; then
+    echo "everview_arc"
   elif [[ "$indicator_line" =~ "ThemedSquadOverlay.lua: Mission name:" ]]; then
     # Extract just the base mission name, ignoring suffixes like " - THE STEEL PATH"
     full_name=$(echo "$indicator_line" | sed 's/.*Mission name: \([^ ]* ([^)]*)\).*/\1/')
     case "$full_name" in
+      "Everview Arc (Zariman)") echo "everview_arc" ;;
       "Tuvul Commons (Zariman)") echo "tuvul_commons" ;;
       "Apollo (Lua)") echo "apollo" ;;
       "Kappa (Sedna)") echo "kappa" ;;
@@ -176,6 +179,7 @@ while true; do
 
     case "$current_mission" in
       tuvul_commons) TITLE="Tuvul Commons"; ICON_PATH="Icons/Tuvul_Commons_icon.png";;
+      everview_arc) TITLE="Everview Arc"; ICON_PATH="Icons/Tuvul_Commons_icon.png";;
       apollo) TITLE="Apollo"; ICON_PATH="Icons/Apollo_icon.png";;
       kappa) TITLE="Kappa"; ICON_PATH="Icons/Kappa_icon.png";;
       armatus) TITLE="Armatus"; ICON_PATH="Icons/Armatus_icon.png";;
