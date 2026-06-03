@@ -87,13 +87,13 @@ case "$map_type" in
   backdrop)
     case "$MISSION" in
             "tuvul_commons")
-                l1=2; l2=6; l3=9
+                l1=2; l2=6; l3=8
                 ;;
             "everview_arc")
                 l1=3; l2=5; l3=9
                 ;;
             *)
-                # Default fallback (e.g., your original 2 6 8)
+                # Default fallback 
                 l1=2; l2=6; l3=8
                 ;;
         esac
@@ -134,7 +134,7 @@ case "$map_type" in
     # Get numeric codes
     room1_num=$(process_layer "$l1" "$log_segment")
     room2_num=$(process_layer "$l2" "$log_segment")
-    room3_num=$(process_layer "&l3" "$log_segment")
+    room3_num=$(process_layer "$l3" "$log_segment")
 
     # Human-readable names — FIXED VERSION
     name_for() {
